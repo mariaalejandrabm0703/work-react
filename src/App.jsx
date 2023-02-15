@@ -34,23 +34,24 @@ function App() {
               type="text"
               id="book"
               name="book"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 py-4 px-6 mr-6"
               value={book}
               onChange={handleChange}
             ></input>
             <div className="mt-12 inline-flex rounded-md shadow">
               <button
                 type="submit"
-                className="py-4 px-6 flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                className="py-4 px-6 flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
               >
                 Buscar
               </button>
             </div>
           </form>
         </div>
-
-        <p>Regálame tu último libro leído</p>
-        <div className="text-center text-gray-500 text-lg">
-          <p>{recommendedBook}</p>
+        <div className="flex justify-center items-center mt-6">
+          <p className="text-gray-500 text-lg w-[300px] h-[200px] bg-gray-50 border border-gray-300 rounded-lg">
+            {recommendedBook}
+          </p>
         </div>
       </main>
     </section>
