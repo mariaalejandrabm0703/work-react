@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useFetchData } from "./hooks/useFetch.js";
+import { getDataFromCohere } from "./services/getProposalFromCohere.js";
 
 /**
  * Description
@@ -9,23 +11,16 @@ import { useEffect, useState } from "react";
  * la cantidad de libros ingresados sea n-cantidad
  */
 function App() {
-  const recommendedBook = "Deberías leer ...";
-  const [book, setBook] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
+  const [book, setBook] = useState("The Way of Kings");
+  const { data, fetchData, loading } = useFetchData( () => getDataFromCohere(book));
 
   const handleChange = (e) => {
     setBook(e.target.value);
   };
 
-  const handleBookRead = (event) => {
+  const handleBookRead = async (event) => {
     event.preventDefault();
-    console.log(book);
+    fetchData();
   };
 
   return (
@@ -35,9 +30,14 @@ function App() {
           Te recomiendo un libro
         </h1>
         <div>
-          <form onSubmit={handleBookRead} className="flex justify-center items-center">
+          <form
+            onSubmit={handleBookRead}
+            className="flex justify-center items-center"
+          >
             <div className="flex justify-center items-center flex-col mt-5">
-              <label htmlFor="book" className="mb-3">Regálame tu último libro leído</label>
+              <label htmlFor="book" className="mb-3">
+                Regálame tu último libro leído
+              </label>
               <input
                 type="text"
                 id="book"
@@ -62,7 +62,7 @@ function App() {
             <div className="loading-icon"></div>
           ) : (
             <p className="text-gray-500 text-lg w-[300px] h-[200px] bg-gray-50 rounded-lg">
-              {recommendedBook}
+              {data?.text}
             </p>
           )}
         </div>
