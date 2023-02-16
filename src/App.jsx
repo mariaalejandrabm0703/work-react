@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Description
@@ -11,6 +11,13 @@ import { useState } from "react";
 function App() {
   const recommendedBook = "Deberías leer ...";
   const [book, setBook] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   const handleChange = (e) => {
     setBook(e.target.value);
@@ -27,17 +34,19 @@ function App() {
         <h1 className="text-3xl font-extrabold text-black">
           Te recomiendo un libro
         </h1>
-        <p>Regálame tu último libro leído</p>
-        <div className="lg:mt-0 lg:flex-shrink-0">
-          <form onSubmit={handleBookRead}>
-            <input
-              type="text"
-              id="book"
-              name="book"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 py-4 px-6 mr-6"
-              value={book}
-              onChange={handleChange}
-            ></input>
+        <div>
+          <form onSubmit={handleBookRead} className="flex justify-center items-center">
+            <div className="flex justify-center items-center flex-col mt-5">
+              <label htmlFor="book" className="mb-3">Regálame tu último libro leído</label>
+              <input
+                type="text"
+                id="book"
+                name="book"
+                className="bg-gray-50 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 py-4 px-6 mr-6"
+                value={book}
+                onChange={handleChange}
+              ></input>
+            </div>
             <div className="mt-12 inline-flex rounded-md shadow">
               <button
                 type="submit"
@@ -49,9 +58,13 @@ function App() {
           </form>
         </div>
         <div className="flex justify-center items-center mt-6">
-          <p className="text-gray-500 text-lg w-[300px] h-[200px] bg-gray-50 border border-gray-300 rounded-lg">
-            {recommendedBook}
-          </p>
+          {loading ? (
+            <div className="loading-icon"></div>
+          ) : (
+            <p className="text-gray-500 text-lg w-[300px] h-[200px] bg-gray-50 rounded-lg">
+              {recommendedBook}
+            </p>
+          )}
         </div>
       </main>
     </section>
